@@ -3,14 +3,22 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { IndexComponent } from './index/index.component';
+import { RecipeModule } from './recipe/recipe.module';
+import { RecipeComponent } from './recipe/recipe.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RecipeModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
