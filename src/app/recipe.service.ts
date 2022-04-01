@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Recipe } from './recipe';
 import { RecipeAPIdata } from './recipe';
+import { Inject } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
@@ -15,14 +16,35 @@ export class RecipeService {
       // Accept: 'application/json',
     }),
   };
-  private apiUrl = 'https://api.edamam.com/api/recipes/v2?type=public&q=salad&app_id=e2b5c6c8&app_key=d0c39a267c620223e95b26b1a592d624';
+
+  //private apiUrl = 'https://api.edamam.com/api/recipes/v2?type=public&q=salad&app_id=e2b5c6c8&app_key=d0c39a267c620223e95b26b1a592d624';
+
+  private apiUrl = 'https://api.edamam.com/api/recipes/v2?';
   apiId = `e2b5c6c8`;
   apiKey = `d0c39a267c620223e95b26b1a592d624`;
   constructor(private http: HttpClient) { }
 
+  getRecipe(search: string) {
+    return this.http.get<RecipeAPIdata>(
+      this.apiUrl +
+      "type=public&q=" +
+      search +
+      "&app_id=" +
+      this.apiId +
+      "&app_key=" +
+      this.apiKey
+    ).pipe(catchError(this.errorHandler));
+
+  }
+
   getAll(): Observable<RecipeAPIdata> {
     return this.http
-      .get<RecipeAPIdata>(this.apiUrl + '')
+      .get<RecipeAPIdata>(this.apiUrl +
+        "type=public&q=salad" +
+        "&app_id=" +
+        this.apiId +
+        "&app_key=" +
+        this.apiKey)
       .pipe(catchError(this.errorHandler));
   }
   errorHandler(error: {

@@ -1,3 +1,15 @@
-<p *ngFor="let recipe of recipes">
-    {{ recipe.label }}
-</p>
+<input type="text" name="inputValue" [(ngModel)]="inputValue">
+<button (click)="handleSearch()" type="submit">Search</button>
+
+
+
+
+<ul *ngFor="let recipe of recipes">
+    <li>
+        {{ recipe.label }}
+    </li>
+    <li>
+        {{ recipe.ingredientLines[1] }}
+    </li>
+    <img src="{{ recipe.image }}" alt="">
+</ul>

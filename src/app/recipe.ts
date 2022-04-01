@@ -1,8 +1,12 @@
+export interface Ingredients {
+    [index: number]: string;
+}
+
 export interface Recipe {
     id?: number;
     label: string;
-    ingredients: string;
     image: string;
+    ingredientLines: Ingredients;
     /* recipeId: string;
       date: any; */
 }
@@ -10,6 +14,7 @@ export interface Recipe {
 
 export interface Hit {
     recipe: Recipe;
+    ingredient: Ingredients;
 }
 export interface RecipeAPIdata {
     hits: Hit[];

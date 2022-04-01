@@ -9,14 +9,25 @@ import { RecipeAPIdata } from '../../recipe';
 })
 export class IndexComponent implements OnInit {
   recipes: Recipe[] = [];
-  constructor(public recipeService: RecipeService) { }
+  constructor(public recipe: RecipeService) { }
+  inputValue!: string;
+
+
+  handleSearch = () => {
+    this.recipe.getRecipe(this.inputValue).subscribe(data =>
+      this.recipes = data.hits.map(result => result.recipe));
+    console.log(this.recipes);
+
+  };
+
   ngOnInit(): void {
-    this.recipeService.getAll().subscribe((data: RecipeAPIdata) => {
+    this.recipe.getAll().subscribe((data: RecipeAPIdata) => {
       this.recipes = data.hits.map(data => data.recipe);
       console.log(this.recipes);
       return this.recipes;
     });
-  }
 
+
+  }
 }
 
