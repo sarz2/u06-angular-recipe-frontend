@@ -12,9 +12,24 @@ export class IndexComponent implements OnInit {
   constructor(public recipe: RecipeService) { }
   inputValue!: string;
 
+  allergens = [
+    { name: 'peanut-free', checked: false },
+    { name: 'dairy-free', checked: false },
+    { name: 'gluten-free', checked: false },
+    { name: 'egg-free', checked: false },
+    { name: 'shellfish-free', checked: false }
+
+  ]
+
+  get selectedAllergens() {
+    return this.allergens
+      .filter(allergen => allergen.checked)
+      .map(allergen => allergen.name);
+
+  }
 
   handleSearch = () => {
-    this.recipe.getRecipe(this.inputValue).subscribe(data =>
+    this.recipe.getRecipe(this.inputValue, this.selectedAllergens).subscribe(data =>
       this.recipes = data.hits.map(result => result.recipe));
     console.log(this.recipes);
 

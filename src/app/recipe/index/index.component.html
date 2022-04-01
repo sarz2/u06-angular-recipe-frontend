@@ -1,15 +1,20 @@
 <input type="text" name="inputValue" [(ngModel)]="inputValue">
+
+<div *ngFor="let allergen of allergens">
+    <input type="checkbox" name="allergens" [(ngModel)]="allergen.checked">
+    {{ allergen.name }}
+</div>
 <button (click)="handleSearch()" type="submit">Search</button>
 
 
 
 
-<ul *ngFor="let recipe of recipes">
+<ul *ngFor="let recipe of recipes; let i = index">
     <li>
         {{ recipe.label }}
     </li>
     <li>
-        {{ recipe.ingredientLines[1] }}
+        {{ recipe.ingredientLines[i] }}
     </li>
     <img src="{{ recipe.image }}" alt="">
 </ul>
