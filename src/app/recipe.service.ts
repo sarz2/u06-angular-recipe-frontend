@@ -37,6 +37,10 @@ export class RecipeService {
 
   }
 
+  extractIdFromUri(uri: string) {
+    return uri.split('#recipe_').pop()
+  }
+
   getAll(): Observable<RecipeAPIdata> {
     return this.http
       .get<RecipeAPIdata>(this.apiUrl +

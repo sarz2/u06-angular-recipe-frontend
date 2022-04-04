@@ -7,6 +7,7 @@ export interface Recipe {
     label: string;
     image: string;
     ingredientLines: Ingredients;
+    uri: string;
     /* recipeId: string;
       date: any; */
 }

@@ -35,10 +35,13 @@ export class IndexComponent implements OnInit {
 
   };
 
+  goToRecipe = () => {
+
+  }
+
   ngOnInit(): void {
     this.recipe.getAll().subscribe((data: RecipeAPIdata) => {
       this.recipes = data.hits.map(data => data.recipe);
-      console.log(this.recipes);
       return this.recipes;
     });
 
