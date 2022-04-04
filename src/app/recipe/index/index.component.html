@@ -11,7 +11,7 @@
 
 <ul *ngFor="let recipe of recipes; let i = index">
     <li>
-        <a (click)="goToRecipe()"> {{ recipe.label }} </a>
+        <a routerLink="/detail/{{ recipe.id }}"> {{ recipe.label }} </a>
     </li>
     <li>
         {{ recipe.ingredientLines[i] }}

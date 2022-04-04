@@ -37,9 +37,17 @@ export class RecipeService {
 
   }
 
-  extractIdFromUri(uri: string) {
-    return uri.split('#recipe_').pop()
+  getRecipeFromId(id: any): Observable<RecipeAPIdata> {
+    return this.http.get<RecipeAPIdata>(
+      'https://api.edamam.com/api/recipes/v2/' +
+      id +
+      '?type=public&app_id=' +
+      this.apiId +
+      '&app_key=' +
+      this.apiKey
+    );
   }
+
 
   getAll(): Observable<RecipeAPIdata> {
     return this.http

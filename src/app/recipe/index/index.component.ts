@@ -30,18 +30,22 @@ export class IndexComponent implements OnInit {
 
   handleSearch = () => {
     this.recipe.getRecipe(this.inputValue, this.selectedAllergens).subscribe(data =>
-      this.recipes = data.hits.map(result => result.recipe));
-    console.log(this.recipes);
+      this.recipes = data.hits.map(result => {
+        const recipe = result.recipe;
+        recipe.id = recipe.uri.split('#recipe_').pop();
+        return recipe;
+      }));
 
   };
 
-  goToRecipe = () => {
-
-  }
 
   ngOnInit(): void {
     this.recipe.getAll().subscribe((data: RecipeAPIdata) => {
-      this.recipes = data.hits.map(data => data.recipe);
+      this.recipes = data.hits.map(result => {
+        const recipe = result.recipe;
+        recipe.id = recipe.uri.split('#recipe_').pop();
+        return recipe;
+      });
       return this.recipes;
     });
 

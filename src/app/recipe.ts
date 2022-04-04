@@ -3,7 +3,7 @@ export interface Ingredients {
 }
 
 export interface Recipe {
-    id?: number;
+    id?: any;
     label: string;
     image: string;
     ingredientLines: Ingredients;
