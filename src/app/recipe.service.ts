@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Recipe } from './recipe';
+import { Hit, Recipe } from './recipe';
 import { RecipeAPIdata } from './recipe';
 import { Inject } from '@angular/core';
 @Injectable({
@@ -37,8 +37,8 @@ export class RecipeService {
 
   }
 
-  getRecipeFromId(id: any): Observable<RecipeAPIdata> {
-    return this.http.get<RecipeAPIdata>(
+  getRecipeFromId(id: any): Observable<Hit> {
+    return this.http.get<Hit>(
       'https://api.edamam.com/api/recipes/v2/' +
       id +
       '?type=public&app_id=' +

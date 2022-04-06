@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../recipe.service';
-import { RecipeAPIdata } from '../recipe';
-import { Recipe } from '../recipe';
+import { Recipe, Hit, RecipeAPIdata } from '../recipe';
 
 @Component({
   selector: 'app-recipe-details',
@@ -20,13 +19,11 @@ export class RecipeDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.service.getRecipeFromId(this.route.snapshot.params['id']).subscribe((data: RecipeAPIdata) => {
-      this.recipe = data.hits.map(data => {
-        let recipe = data.recipe;
-        recipe.id = recipe.uri.split('#recipe_').pop();
-        return recipe;
-      })[0];
+    this.service.getRecipeFromId(this.route.snapshot.params['id']).subscribe((data: any) => {
+      this.recipe = data.recipe;
+      return this.recipe;
     });
-  }
-
+  };
 }
+
+

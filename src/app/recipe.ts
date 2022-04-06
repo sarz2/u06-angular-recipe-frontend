@@ -19,4 +19,5 @@ export interface Hit {
 }
 export interface RecipeAPIdata {
     hits: Hit[];
+    recipe: Recipe;
 }

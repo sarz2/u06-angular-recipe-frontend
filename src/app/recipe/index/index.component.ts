@@ -46,7 +46,6 @@ export class IndexComponent implements OnInit {
         recipe.id = recipe.uri.split('#recipe_').pop();
         return recipe;
       });
-      return this.recipes;
     });
 
 
