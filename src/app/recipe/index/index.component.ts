@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RecipeService } from '../../recipe.service';
+import { RecipeService } from '../../_services/recipe.service';
 import { Recipe } from '../../recipe';
 import { RecipeAPIdata } from '../../recipe';
 @Component({
@@ -8,7 +8,7 @@ import { RecipeAPIdata } from '../../recipe';
   styleUrls: ['./index.component.css'],
 })
 export class IndexComponent implements OnInit {
-  recipes: Recipe[] = [];
+  recipes: any;
   constructor(public recipe: RecipeService) { }
   inputValue!: string;
 

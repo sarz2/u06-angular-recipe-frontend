@@ -17,8 +17,10 @@
     <li>
         <a routerLink="/detail/{{ recipe.id }}"> {{ recipe.label }} </a>
     </li>
-    <li>
-        {{ recipe.ingredientLines[i] }}
-    </li>
+    <div *ngFor="let ingredient of recipe.ingredientLines">
+        <li>
+            {{ ingredient }}
+        </li>
+    </div>
     <img src="{{ recipe.image }}" alt="">
 </ul>
