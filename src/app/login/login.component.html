@@ -1,35 +1,22 @@
-<div class="col-md-12">
-    <div class="card card-container">
-        <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" class="form-control" name="email" [(ngModel)]="form.email" required
-                    #email="ngModel" />
-                <div class="alert alert-danger" role="alert" *ngIf="email.errors && f.submitted">
-                    Email is required!
-                </div>
+<main class="form-signin">
+    <form [formGroup]="loginForm">
+        <h1 class="h3 mb-3 fw-normal">Sign In</h1>
+        <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" formControlName="email">
+            <label for="floatingInput">Username</label>
+            <div *ngIf="loginForm.invalid && emailControl?.touched && emailControl.errors">
+                <span *ngIf="emailControl.errors['required']">Username is required</span>
+                <span *ngIf="emailControl.errors['email']">Username must be an email</span>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
-                    minlength="6" #password="ngModel" />
-                <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
-                    <div *ngIf="password.errors['required']">Password is required</div>
-                    <div *ngIf="password.errors['minlength']">
-                        Password must be at least 6 characters
-                    </div>
-                </div>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" formControlName="password">
+            <label for="floatingPassword">Password</label>
+            <div *ngIf="loginForm.invalid && passwordControl?.touched && passwordControl.errors">
+                <span *ngIf="passwordControl.errors['minlength']">Password must have at least 8 characters</span>
             </div>
-            <div class="form-group">
-                <button class="btn btn-primary btn-block">
-                    Login
-                </button>
-            </div>
-            <div class="form-group">
-                <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
-                    Login failed: {{ errorMessage }}
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
+        <button (click)="login()" class="w-100 btn btn-lg btn-primary" type="submit"
+            [disabled]="this.loginForm.invalid">Sign in</button>
+    </form>
+</main>

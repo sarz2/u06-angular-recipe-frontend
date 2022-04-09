@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
+
 
 @Component({
   selector: 'app-login',
@@ -9,44 +12,38 @@ import { TokenStorageService } from '../_services/token-storage.service';
 })
 export class LoginComponent implements OnInit {
 
-  form: any = {
-    email: null,
-    password: null
-  };
-  isLoggedIn = false;
-  isLoginFailed = false;
-  errorMessage = '';
+  loginForm = new FormGroup({
+    email: new FormControl('', Validators.required),
+    password: new FormControl(['', Validators.required, Validators.minLength(5)])
+  });
 
   constructor(
     private authService: AuthService,
-    private tokenStorage: TokenStorageService
+    private tokenStorage: TokenStorageService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
-    }
   }
 
-  onSubmit(): void {
-    const { email, password } = this.form;
-    this.authService.login(email, password).subscribe(
-      data => {
-        this.tokenStorage.saveToken(data.access_token);
-        this.tokenStorage.saveId(data.id);
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        this.reloadPage();
-      },
-      err => {
-        this.errorMessage = err.error.message;
-        this.isLoginFailed = true;
-      }
-    )
+  get emailControl(): FormControl {
+    return this.loginForm.get('email') as FormControl;
   }
 
-  reloadPage(): void {
-    window.location.reload();
+  get passwordControl(): FormControl {
+    return this.loginForm.get('password') as FormControl;
+  }
+
+  login(): void {
+    let email = this.loginForm.get('email')?.value;
+    let password = this.loginForm.get('password')?.value;
+    this.authService.login(email, password).subscribe();
+    this.redirectPage();
+  }
+
+  redirectPage(): void {
+    const id = this.tokenStorage.getId();
+    this.router.navigateByUrl(`profile`);
   }
 
 }
