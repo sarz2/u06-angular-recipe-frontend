@@ -1,4 +1,10 @@
 <div *ngIf="recipe">
     <h1> {{ recipe.label }} </h1>
     <img src="{{ recipe.image }}" alt="">
+    <div *ngFor="let ingredient of recipe.ingredientLines">
+        <p>
+            - {{ ingredient }}
+        </p>
+    </div>
+    <button class="btn btn-primary" (click)="saveToList(recipe)">Save recipe</button>
 </div>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RecipeService } from '../recipe.service';
+import { RecipeService } from '../_services/recipe.service';
 import { Recipe, Hit, RecipeAPIdata } from '../recipe';
+import { AuthService } from '../_services/auth.service';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-recipe-details',
@@ -10,12 +12,17 @@ import { Recipe, Hit, RecipeAPIdata } from '../recipe';
 })
 export class RecipeDetailsComponent implements OnInit {
 
-  recipe!: Recipe;
+  recipe!: any;
+  public package = {};
+
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private service: RecipeService
+    private service: RecipeService,
+    private authService: AuthService,
+    private token: TokenStorageService,
+
   ) { }
 
   ngOnInit(): void {
@@ -24,6 +31,18 @@ export class RecipeDetailsComponent implements OnInit {
       return this.recipe;
     });
   };
+
+
+  saveToList(recipe: Recipe) {
+    this.package = {
+      title: recipe.label,
+      ingredients: recipe.ingredientLines.toString(),
+      image: recipe.image,
+      SELFREF: recipe.id
+    };
+    this.authService.addToList(this.package).subscribe(data => { });
+  }
+
 }
 
 
