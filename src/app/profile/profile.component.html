@@ -1,0 +1,8 @@
+<div *ngIf="isloggedIn()">
+</div>
+
+<form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" name="title" [(ngModel)]="form.title" required #title="ngModel" />
+    <button type="submit">Skapa ny lista</button>
+</form>
