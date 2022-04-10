@@ -27,18 +27,58 @@ export class RecipeService {
     private token: TokenStorageService
   ) { }
 
-  getRecipe(search: string, allergens: string[]): Observable<RecipeAPIdata> {
-    return this.http.get<RecipeAPIdata>(
-      this.apiUrl +
-      "type=public&q=" +
-      search +
-      "&app_id=" +
-      this.apiId +
-      "&app_key=" +
-      this.apiKey +
-      '&health=' +
-      allergens.join('&health=')
-    ).pipe(catchError(this.errorHandler));
+  getRecipe(search: string, allergens: string[], mealType: string[]): Observable<RecipeAPIdata> {
+    if (!allergens == null && !mealType == null) {
+      return this.http.get<RecipeAPIdata>(
+        this.apiUrl +
+        "type=public&q=" +
+        search +
+        "&app_id=" +
+        this.apiId +
+        "&app_key=" +
+        this.apiKey +
+        '&health=' +
+        allergens.join('&health=') +
+        '&mealType=' +
+        mealType.join('&mealType=')
+      ).pipe(catchError(this.errorHandler));
+    }
+    else if (!allergens == null && mealType == null) {
+      return this.http.get<RecipeAPIdata>(
+        this.apiUrl +
+        "type=public&q=" +
+        search +
+        "&app_id=" +
+        this.apiId +
+        "&app_key=" +
+        this.apiKey +
+        '&health=' +
+        allergens.join('&health=')
+      ).pipe(catchError(this.errorHandler));
+    }
+    else if (!mealType == null && allergens == null) {
+      return this.http.get<RecipeAPIdata>(
+        this.apiUrl +
+        "type=public&q=" +
+        search +
+        "&app_id=" +
+        this.apiId +
+        "&app_key=" +
+        this.apiKey +
+        mealType.join('&mealType=')
+      ).pipe(catchError(this.errorHandler));
+    }
+    else {
+      return this.http.get<RecipeAPIdata>(
+        this.apiUrl +
+        "type=public&q=" +
+        search +
+        "&app_id=" +
+        this.apiId +
+        "&app_key=" +
+        this.apiKey
+      ).pipe(catchError(this.errorHandler));
+    }
 
   }
 

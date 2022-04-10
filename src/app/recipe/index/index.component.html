@@ -1,26 +1,53 @@
-<div class="alert alert-primary" role="alert">
-    This is a primary alert—check it out!
-</div>
-
-<input type="text" name="inputValue" [(ngModel)]="inputValue">
-
-<div *ngFor="let allergen of allergens">
-    <input type="checkbox" name="allergens" [(ngModel)]="allergen.checked">
-    {{ allergen.name }}
-</div>
-<button (click)="handleSearch()" type="submit">Search</button>
-
-
-
-
-<ul *ngFor="let recipe of recipes; let i = index">
-    <li>
-        <a routerLink="/detail/{{ recipe.id }}"> {{ recipe.label }} </a>
-    </li>
-    <div *ngFor="let ingredient of recipe.ingredientLines">
-        <li>
-            {{ ingredient }}
-        </li>
+<div class="w-100">
+    <div class="d-flex justify-content-center input-group">
+        <div class="form-outline">
+            <div class="d-flex flex-row">
+                <input class="form-control" type="text" name="inputValue" [(ngModel)]="inputValue">
+                <button class="btn btn-primary" (click)="handleSearch()" type="submit">Search</button>
+            </div>
+            <div class="d-flex flex-row">
+                <div>
+                    <div *ngFor="let allergen of allergens">
+                        <input class="form-check-input " type="checkbox" name="allergens"
+                            [(ngModel)]="allergen.checked">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            {{ allergen.name }}
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <div *ngFor="let mealtyp of mealType">
+                        <input class="form-check-input " type="checkbox" name="allergens" [(ngModel)]="mealtyp.checked">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            {{ mealtyp.name }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <img src="{{ recipe.image }}" alt="">
-</ul>
+
+
+
+    <div class=" d-flex flex-wrap">
+        <ul *ngFor="let recipe of recipes; let i = index">
+            <div class=" d-flex flex-row l-100 mb-5 margin-top">
+                <div class="card h-100">
+                    <img class="card-img-top" src="{{ recipe.image }}" alt="..." />
+                    <div class="card-body p-4">
+                        <h5 class="fw-bolder">
+                            <a routerLink="/detail/{{ recipe.id }}"> {{ recipe.label }} </a>
+                        </h5>
+                        <div *ngFor="let ingredient of recipe.ingredientLines">
+                            <div class="text-left">
+                                <li>
+                                    {{ ingredient }}
+                                </li>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </ul>
+    </div>

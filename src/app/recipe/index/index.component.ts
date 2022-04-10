@@ -21,6 +21,18 @@ export class IndexComponent implements OnInit {
 
   ]
 
+  mealType = [
+    { name: 'Breakfast', checked: false },
+    { name: 'Lunch', checked: false },
+    { name: 'Dinner', checked: false }
+  ]
+
+  get selectedmealTypes() {
+    return this.mealType
+      .filter(mealType => mealType.checked)
+      .map(mealType => mealType.name)
+  }
+
   get selectedAllergens() {
     return this.allergens
       .filter(allergen => allergen.checked)
@@ -29,7 +41,7 @@ export class IndexComponent implements OnInit {
   }
 
   handleSearch = () => {
-    this.recipe.getRecipe(this.inputValue, this.selectedAllergens).subscribe(data =>
+    this.recipe.getRecipe(this.inputValue, this.selectedAllergens, this.selectedmealTypes).subscribe(data =>
       this.recipes = data.hits.map(result => {
         const recipe = result.recipe;
         recipe.id = recipe.uri.split('#recipe_').pop();
