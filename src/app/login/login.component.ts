@@ -37,13 +37,19 @@ export class LoginComponent implements OnInit {
   login(): void {
     let email = this.loginForm.get('email')?.value;
     let password = this.loginForm.get('password')?.value;
-    this.authService.login(email, password).subscribe();
-    this.redirectPage();
+    this.authService.login(email, password).subscribe(data => this.handleResponse(data));
   }
 
   redirectPage(): void {
-    const id = this.tokenStorage.getId();
+    const email = this.tokenStorage.getEmail();
     this.router.navigateByUrl(`profile`);
+  }
+
+  handleResponse(data: any) {
+    this.tokenStorage.saveToken(data.token);
+    this.tokenStorage.saveEmail(data.user.email);
+    this.redirectPage();
+
   }
 
 }

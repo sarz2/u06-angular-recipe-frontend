@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs';
 import { Router } from '@angular/router';
@@ -27,6 +27,7 @@ export class AuthService {
   private loginUrl = 'http://localhost:8000/api/login'
   private addToListUrl = 'http://localhost:8000/api/addtolist'
   private createListUrl = 'http://localhost:8000/api/createlist'
+  private showlistsUrl = 'http://localhost:8000/api/showlists'
 
 
 
@@ -39,27 +40,29 @@ export class AuthService {
 
 
   login(email: string, password: string): Observable<any> {
-    this.http.post(
+    return this.http.post(
       `${this.loginUrl}`,
       {
         email,
         password
       }, httpOptions);
-    if (email && password) {
-      window.sessionStorage.setItem('access_token', 'token')
-      return of(new HttpResponse({ status: 200 }));
-    }
-    else {
-      return of(new HttpResponse({ status: 401 }));
-    }
+    // if (email && password) {
+    //   localStorage.setItem('access_token', 'token');
+    //   localStorage.setItem('email', 'email');
+    //   return of(new HttpResponse({ status: 200 }));
+    // }
+    // else {
+    //   return of(new HttpResponse({ status: 401 }));
+    // }
   }
 
   logout() {
-    window.sessionStorage.removeItem('access_token');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('email');
   }
 
   isloggedIn(): boolean {
-    if (window.sessionStorage.getItem('access_token') !== null) {
+    if (localStorage.getItem('token') !== null) {
       return true;
     }
     return false;
@@ -74,12 +77,14 @@ export class AuthService {
 
   }
 
-  createList(title: string, user_id: number) {
-    return this.http.post(`${this.createListUrl}`, { title, user_id }, {
-      headers: new HttpHeaders({
-        Authorization: "Bearer" + this.token.getToken()
-      })
-    });
+  createList(title: string) {
+    const email = this.token.getEmail();
+    return this.http.post(`${this.createListUrl}`, { title, email }, httpOptions)
+  }
+
+  getLists(): Observable<any> {
+
+    return this.http.get(`${this.showlistsUrl}`);
   }
 
 }
