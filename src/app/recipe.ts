@@ -21,3 +21,7 @@ export interface RecipeAPIdata {
     hits: Hit[];
     recipe: Recipe;
 }
+
+export interface Lists {
+    title: string;
+}

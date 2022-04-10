@@ -1,4 +1,6 @@
 <div *ngIf="isloggedIn()">
+
+    <p>hej</p>
 </div>
 
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
@@ -6,3 +8,7 @@
     <input type="text" class="form-control" name="title" [(ngModel)]="form.title" required #title="ngModel" />
     <button type="submit">Skapa ny lista</button>
 </form>
+
+<div *ngFor="let list of lists">
+    <h4>{{ list.title }}</h4>
+</div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
-
+import { Lists } from '../recipe';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -11,9 +11,9 @@ export class ProfileComponent implements OnInit {
 
   form: any = {
     title: null,
-    userId: null
   }
 
+  lists!: Lists[]
   constructor(
     private token: TokenStorageService,
     private service: AuthService
@@ -21,6 +21,14 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.lists = [];
+    let email = this.token.getEmail();
+    this.service.getLists().subscribe(response => {
+      response.data.forEach((e: any) => {
+        if (e.email == email) this.lists.push(response.lists)
+        console.log(response.lists);
+      })
+    });
   }
 
   isloggedIn() {
@@ -28,8 +36,8 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    const { title, userId } = this.form;
-    this.service.createList(title, userId).subscribe();
+    const { title } = this.form;
+    this.service.createList(title).subscribe();
   }
 
 
