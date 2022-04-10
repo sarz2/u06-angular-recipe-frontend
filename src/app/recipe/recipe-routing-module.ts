@@ -6,8 +6,7 @@ import { LoginComponent } from "../login/login.component";
 
 const routes: Routes = [
     { path: '', redirectTo: 'recipe', pathMatch: 'full' },
-    { path: 'recipe', redirectTo: 'recipe/index', pathMatch: 'full' },
-    { path: 'recipe/index', component: IndexComponent },
+    { path: 'recipe', component: IndexComponent },
     { path: 'detail/:id', component: RecipeDetailsComponent },
 
 
