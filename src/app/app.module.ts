@@ -11,6 +11,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { RecipeModule } from './recipe.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Placement as PopperPlacement, Options } from '@popperjs/core';
+
 
 
 @NgModule({
@@ -28,7 +31,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     HttpClientModule,
     FormsModule,
     RecipeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
