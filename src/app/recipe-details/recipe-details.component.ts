@@ -4,6 +4,8 @@ import { RecipeService } from '../_services/recipe.service';
 import { Recipe, Hit, RecipeAPIdata } from '../recipe';
 import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { Lists } from '../recipe';
+import { LaravelApiData } from '../recipe';
 
 @Component({
   selector: 'app-recipe-details',
@@ -14,6 +16,8 @@ export class RecipeDetailsComponent implements OnInit {
 
   recipe!: any;
   public package = {};
+
+  lists: Lists[] = [];
 
 
   constructor(
@@ -30,17 +34,25 @@ export class RecipeDetailsComponent implements OnInit {
       this.recipe = data.recipe;
       return this.recipe;
     });
+    let email = this.token.getEmail()
+    this.authService.getLists().subscribe((response: LaravelApiData) => {
+      response.data.forEach((e: any) => {
+        if (e.email == email) this.lists.push(e)
+      })
+    });
   };
 
 
-  saveToList(recipe: Recipe) {
+  saveToList(recipe: Recipe, id: number) {
     this.package = {
       title: recipe.label,
-      ingredients: recipe.ingredientLines.toString(),
       image: recipe.image,
-      SELFREF: recipe.id
+      ingredients: recipe.ingredientLines.toString(),
+      recipe_id: recipe.uri.split('#recipe_').pop(),
+      id: id
     };
     this.authService.addToList(this.package).subscribe(data => { });
+    console.log(this.package)
   }
 
 }

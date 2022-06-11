@@ -6,5 +6,10 @@
             - {{ ingredient }}
         </p>
     </div>
-    <button class="btn btn-primary" (click)="saveToList(recipe)">Save recipe</button>
+    <div class="d-flex flex-row" *ngFor="let list of lists">
+        <div>
+            <h4>{{ list.title }}</h4>
+        </div>
+        <button class="btn btn-primary" (click)="saveToList(recipe, list.id)">Save recipe</button>
+    </div>
 </div>
