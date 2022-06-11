@@ -1,6 +1,5 @@
 <div class="col-md-12">
     <div class="card card-container">
-        <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card" />
         <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
             <div class="form-group">
                 <label for="username">Username</label>
@@ -44,8 +43,8 @@
                     [(ngModel)]="form.password_confirmation" required minlength="6" #password_confirmation="ngModel" />
             </div>
             <div class="form-group">
-                <button [disabled]="!username || !email ||!password ||!password_confirmation" (click)="onSubmit()"
-                    class="btn btn-primary btn-block">Sign Up</button>
+                <button type="button" [disabled]="!username || !email ||!password ||!password_confirmation"
+                    (click)="onSubmit()" class="btn btn-primary btn-block">Sign Up</button>
             </div>
             <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
                 Signup failed!<br />{{ errorMessage }}

@@ -22,7 +22,8 @@ export class SignupComponent implements OnInit {
   errorMessage = '';
 
   constructor(
-    private service: AuthService
+    private service: AuthService,
+    private router: Router
   ) { }
 
   onSubmit(): void {
@@ -39,8 +40,12 @@ export class SignupComponent implements OnInit {
         this.isSignUpFailed = true;
       }
     )
+    // this.redirectPage()
   }
 
+  redirectPage(): void {
+    this.router.navigateByUrl(`recipe`);
+  }
 
   ngOnInit(): void {
 
