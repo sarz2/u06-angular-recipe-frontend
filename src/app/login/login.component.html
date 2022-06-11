@@ -3,10 +3,10 @@
         <h1 class="h3 mb-3 fw-normal">Sign In</h1>
         <div class="form-floating">
             <input type="email" class="form-control" id="floatingInput" formControlName="email">
-            <label for="floatingInput">Username</label>
+            <label for="floatingInput">Email</label>
             <div *ngIf="loginForm.invalid && emailControl?.touched && emailControl.errors">
-                <span *ngIf="emailControl.errors['required']">Username is required</span>
-                <span *ngIf="emailControl.errors['email']">Username must be an email</span>
+                <span *ngIf="emailControl.errors['required']">Email is required</span>
+                <span *ngIf="emailControl.errors['email']">Email must be an email</span>
             </div>
         </div>
         <div class="form-floating">

@@ -41,8 +41,7 @@ export class LoginComponent implements OnInit {
   }
 
   redirectPage(): void {
-    const email = this.tokenStorage.getEmail();
-    this.router.navigateByUrl(`profile`);
+    this.router.navigateByUrl(`recipe`);
   }
 
   handleResponse(data: any) {
