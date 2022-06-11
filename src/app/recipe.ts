@@ -24,4 +24,10 @@ export interface RecipeAPIdata {
 
 export interface Lists {
     title: string;
+    email: string;
+    id: number;
+}
+
+export interface LaravelApiData {
+    data: Lists[];
 }
