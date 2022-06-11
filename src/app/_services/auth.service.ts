@@ -12,6 +12,8 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,7 +30,9 @@ export class AuthService {
   private addToListUrl = 'http://localhost:8000/api/addtolist'
   private createListUrl = 'http://localhost:8000/api/createlist'
   private showlistsUrl = 'http://localhost:8000/api/showlists'
+  private destroyListURL = 'http://localhost:8000/api/destroy'
 
+  headers = new HttpHeaders({ 'Accept': 'application/json', Authorization: "Bearer " + this.token.getToken() })
 
 
 
@@ -57,7 +61,7 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('access_token');
+    localStorage.removeItem('token');
     localStorage.removeItem('email');
   }
 
@@ -69,22 +73,38 @@ export class AuthService {
   }
 
   addToList(data: any) {
-    return this.http.post(`${this.addToListUrl}`, data, {
-      headers: new HttpHeaders({
-        Authorization: "Bearer" + this.token.getToken()
-      })
+    const token = this.token.getToken();
+    let headers: HttpHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
     });
+    return this.http.post(`${this.addToListUrl}`, { id: data.id, title: data.title, image: data.image, recipe_id: data.recipe_id, ingredients: data.ingredients }, { headers });
 
   }
 
   createList(title: string) {
+    const token = this.token.getToken();
+    let headers: HttpHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
     const email = this.token.getEmail();
-    return this.http.post(`${this.createListUrl}`, { title, email }, httpOptions)
+    return this.http.post(`${this.createListUrl}`, { title, email }, { headers });
   }
 
   getLists(): Observable<any> {
 
     return this.http.get(`${this.showlistsUrl}`);
+  }
+
+  deleteList(id: number) {
+    const token = this.token.getToken();
+    let headers: HttpHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post(`${this.destroyListURL}`, { id: id }, { headers });
   }
 
 }

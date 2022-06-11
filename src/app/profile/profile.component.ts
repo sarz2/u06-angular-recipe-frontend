@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
-import { Lists } from '../recipe';
+import { LaravelApiData, Lists } from '../recipe';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -13,7 +13,8 @@ export class ProfileComponent implements OnInit {
     title: null,
   }
 
-  lists!: Lists[]
+
+  lists: Lists[] = [];
   constructor(
     private token: TokenStorageService,
     private service: AuthService
@@ -21,12 +22,10 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.lists = [];
-    let email = this.token.getEmail();
-    this.service.getLists().subscribe(response => {
+    let email = this.token.getEmail()
+    this.service.getLists().subscribe((response: LaravelApiData) => {
       response.data.forEach((e: any) => {
-        if (e.email == email) this.lists.push(response.lists)
-        console.log(response.lists);
+        if (e.email == email) this.lists.push(e)
       })
     });
   }
@@ -38,7 +37,11 @@ export class ProfileComponent implements OnInit {
   onSubmit() {
     const { title } = this.form;
     this.service.createList(title).subscribe();
+
   }
 
-
+  deleteList(id: number) {
+    console.log("deleted: " + id);
+    this.service.deleteList(id).subscribe(data => { console.log("Subscr: " + data) });
+  }
 }
