@@ -3,6 +3,7 @@ import { TokenStorageService } from '../_services/token-storage.service';
 import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { LaravelApiData, OneList } from '../recipe';
+import { convertFromMaybeForwardRefExpression } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-list',
@@ -35,10 +36,16 @@ export class ListComponent implements OnInit {
         };
       });
     })
+
+
   }
 
   removeRecipe(id: number) {
-    this.service.removeRecipeFromList(id).subscribe();
+    this.service.removeRecipeFromList(id).subscribe(data => this.refresh()
+    );
   }
 
+  refresh(): void {
+    window.location.reload();
+  }
 }
