@@ -30,4 +30,15 @@ export interface Lists {
 
 export interface LaravelApiData {
     data: Lists[];
+    recipe: ListRecipe[];
+}
+
+export interface ListRecipe {
+    list_id: number;
+    SELFREF: string;
+    image: string;
+}
+
+export interface OneList {
+    title: string;
 }
