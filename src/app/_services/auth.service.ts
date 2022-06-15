@@ -25,6 +25,7 @@ export class AuthService {
     private token: TokenStorageService) { }
 
 
+  private baseUrl = 'http://localhost:8000'
   private signupUrl = 'http://localhost:8000/api/register'
   private loginUrl = 'http://localhost:8000/api/login'
   private addToListUrl = 'http://localhost:8000/api/addtolist'
@@ -94,7 +95,22 @@ export class AuthService {
 
   getLists(): Observable<any> {
 
-    return this.http.get(`${this.showlistsUrl}`);
+    const token = this.token.getToken();
+    let headers: HttpHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get(`${this.showlistsUrl}`, { headers });
+  }
+
+  getOneList(id: number): Observable<any> {
+    const token = this.token.getToken();
+    let headers: HttpHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get(`${this.baseUrl}/api/showlist/${id}`, { headers });
+
   }
 
   deleteList(id: number) {
@@ -105,6 +121,16 @@ export class AuthService {
     });
 
     return this.http.post(`${this.destroyListURL}`, { id: id }, { headers });
+  }
+
+  removeRecipeFromList(id: number) {
+    const token = this.token.getToken();
+    let headers: HttpHeaders = new HttpHeaders({
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post(`${this.baseUrl}/api/removerecipe`, { id: id }, { headers });
+
   }
 
 }
