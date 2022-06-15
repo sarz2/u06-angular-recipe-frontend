@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Placement as PopperPlacement, Options } from '@popperjs/core';
+import { ListComponent } from './list/list.component';
 
 
 
@@ -24,6 +25,7 @@ import { Placement as PopperPlacement, Options } from '@popperjs/core';
     LoginComponent,
     ProfileComponent,
     NavbarComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
