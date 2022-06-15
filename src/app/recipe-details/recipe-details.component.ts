@@ -4,8 +4,9 @@ import { RecipeService } from '../_services/recipe.service';
 import { Recipe, Hit, RecipeAPIdata } from '../recipe';
 import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
-import { Lists } from '../recipe';
+import { Lists, Package } from '../recipe';
 import { LaravelApiData } from '../recipe';
+import { ignoreElements } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-details',
@@ -15,9 +16,11 @@ import { LaravelApiData } from '../recipe';
 export class RecipeDetailsComponent implements OnInit {
 
   recipe!: any;
-  public package = {};
+  package = {} as Package;
 
   lists: Lists[] = [];
+
+  message: string = '';
 
 
   constructor(
@@ -51,8 +54,23 @@ export class RecipeDetailsComponent implements OnInit {
       recipe_id: recipe.uri.split('#recipe_').pop(),
       id: id
     };
-    this.authService.addToList(this.package).subscribe(data => { });
-    console.log(this.package)
+    this.authService.getOneList(id).subscribe(data => {
+
+      let alreadyExist = false;
+      data.forEach((e: any) => {
+        if (this.package.title === e.title) {
+          alreadyExist = true;
+        }
+      })
+      if (alreadyExist) {
+        this.message = 'You cannot add the same recipe to a list twice';
+      }
+      else {
+        this.authService.addToList(this.package).subscribe(data => { });
+      }
+    })
+    console.log(this.message);
+
   }
 
 }

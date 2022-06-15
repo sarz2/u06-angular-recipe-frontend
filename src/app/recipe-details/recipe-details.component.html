@@ -6,6 +6,9 @@
             - {{ ingredient }}
         </p>
     </div>
+    <div *ngIf="this.message !== ''">
+        {{ this.message }}
+    </div>
     <div class="d-flex flex-row" *ngFor="let list of lists">
         <div>
             <h4>{{ list.title }}</h4>
