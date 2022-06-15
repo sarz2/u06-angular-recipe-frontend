@@ -1,1 +1,9 @@
-<p>list works!</p>
+<div>
+    <h1>{{ list.title }}</h1>
+</div>
+
+
+<div *ngFor="let recipe of recipes">
+    <h4> {{ recipe.title }}</h4>
+    <button (click)="removeRecipe(recipe.id)" class="alert alert-danger">X</button>
+</div>

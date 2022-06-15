@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { TokenStorageService } from '../_services/token-storage.service';
+import { AuthService } from '../_services/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { LaravelApiData, OneList } from '../recipe';
 
 @Component({
   selector: 'app-list',
@@ -7,9 +11,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+  recipes: any = [];
+
+  list = {} as OneList;
+
+  constructor(private token: TokenStorageService,
+    private service: AuthService,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
+    this.service.getOneList(this.route.snapshot.params['id']).subscribe((response) => {
+      response.forEach((e: any) => {
+        this.recipes.push(e)
+      })
+    })
+
+
+    this.service.getLists().subscribe((response: LaravelApiData) => {
+      response.data.forEach((e: any) => {
+        if (e.id == this.route.snapshot.params['id']) {
+          this.list = e;
+        };
+      });
+    })
+  }
+
+  removeRecipe(id: number) {
+    this.service.removeRecipeFromList(id).subscribe();
   }
 
 }
