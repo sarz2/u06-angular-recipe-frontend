@@ -42,3 +42,11 @@ export interface ListRecipe {
 export interface OneList {
     title: string;
 }
+
+export interface Package {
+    title: string;
+    image: string;
+    ingredients: string;
+    recipe_id: string | undefined;
+    id: number;
+}
