@@ -67,6 +67,7 @@ export class RecipeDetailsComponent implements OnInit {
       }
       else {
         this.authService.addToList(this.package).subscribe();
+        this.message = 'Added to list!'
       }
     })
     console.log(this.message);

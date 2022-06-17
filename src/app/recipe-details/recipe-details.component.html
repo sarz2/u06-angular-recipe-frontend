@@ -4,7 +4,7 @@
         <div class="recipe-card" *ngIf="recipe">
             <h1> {{ recipe.label }} </h1>
             <img src="{{ recipe.image }}" alt="">
-            <div class="d-flex flex-column align-items-baseline">
+            <div class="d-flex flex-column align-items-baseline w-100">
                 <h2>Ingredients</h2>
                 <div *ngFor="let ingredient of recipe.ingredientLines">
                     <p>
