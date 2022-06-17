@@ -25,20 +25,13 @@ export class AuthService {
     private token: TokenStorageService) { }
 
 
-  private baseUrl = 'http://localhost:8000'
-  private signupUrl = 'http://localhost:8000/api/register'
-  private loginUrl = 'http://localhost:8000/api/login'
-  private addToListUrl = 'http://localhost:8000/api/addtolist'
-  private createListUrl = 'http://localhost:8000/api/createlist'
-  private showlistsUrl = 'http://localhost:8000/api/showlists'
-  private destroyListURL = 'http://localhost:8000/api/destroy'
+  private baseUrl = 'https://recipe-app-u06.herokuapp.com/api'
 
-  headers = new HttpHeaders({ 'Accept': 'application/json', Authorization: "Bearer " + this.token.getToken() })
 
 
 
   signUp(username: string, email: string, password: string, password_confirmation: string): Observable<any> {
-    return this.http.post<{ token: string }>(`${this.signupUrl}`,
+    return this.http.post<{ token: string }>(`${this.baseUrl}/register`,
       { username, email, password, password_confirmation },
       httpOptions);
   }
@@ -46,19 +39,11 @@ export class AuthService {
 
   login(email: string, password: string): Observable<any> {
     return this.http.post(
-      `${this.loginUrl}`,
+      `${this.baseUrl}/login`,
       {
         email,
         password
       }, httpOptions);
-    // if (email && password) {
-    //   localStorage.setItem('access_token', 'token');
-    //   localStorage.setItem('email', 'email');
-    //   return of(new HttpResponse({ status: 200 }));
-    // }
-    // else {
-    //   return of(new HttpResponse({ status: 401 }));
-    // }
   }
 
   logout() {
@@ -79,7 +64,7 @@ export class AuthService {
       'Accept': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.post(`${this.addToListUrl}`, { id: data.id, title: data.title, image: data.image, recipe_id: data.recipe_id, ingredients: data.ingredients }, { headers });
+    return this.http.post(`${this.baseUrl}/addtolist`, { id: data.id, title: data.title, image: data.image, recipe_id: data.recipe_id, ingredients: data.ingredients }, { headers });
 
   }
 
@@ -90,7 +75,7 @@ export class AuthService {
       'Authorization': `Bearer ${token}`
     });
     const email = this.token.getEmail();
-    return this.http.post(`${this.createListUrl}`, { title, email }, { headers });
+    return this.http.post(`${this.baseUrl}/createlist`, { title, email }, { headers });
   }
 
   getLists(): Observable<any> {
@@ -100,7 +85,7 @@ export class AuthService {
       'Accept': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get(`${this.showlistsUrl}`, { headers });
+    return this.http.get(`${this.baseUrl}/showlists`, { headers });
   }
 
   getOneList(id: number): Observable<any> {
@@ -109,7 +94,7 @@ export class AuthService {
       'Accept': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get(`${this.baseUrl}/api/showlist/${id}`, { headers });
+    return this.http.get(`${this.baseUrl}/showlist/${id}`, { headers });
 
   }
 
@@ -120,7 +105,7 @@ export class AuthService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.post(`${this.destroyListURL}`, { id: id }, { headers });
+    return this.http.post(`${this.baseUrl}/destroy`, { id: id }, { headers });
   }
 
   removeRecipeFromList(id: number) {
@@ -129,7 +114,7 @@ export class AuthService {
       'Accept': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.post(`${this.baseUrl}/api/removerecipe`, { id: id }, { headers });
+    return this.http.post(`${this.baseUrl}/removerecipe`, { id: id }, { headers });
 
   }
 
