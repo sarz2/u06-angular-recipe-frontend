@@ -63,10 +63,10 @@ export class RecipeDetailsComponent implements OnInit {
         }
       })
       if (alreadyExist) {
-        this.message = 'You cannot add the same recipe to a list twice';
+        this.message = 'You already have this recipe in your list!';
       }
       else {
-        this.authService.addToList(this.package).subscribe(data => { });
+        this.authService.addToList(this.package).subscribe();
       }
     })
     console.log(this.message);

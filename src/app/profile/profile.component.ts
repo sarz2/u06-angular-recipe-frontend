@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
 
   onSubmit() {
     const { title } = this.form;
-    this.service.createList(title).subscribe();
+    this.service.createList(title).subscribe(data => { this.refresh() });
 
   }
 
@@ -54,6 +54,13 @@ export class ProfileComponent implements OnInit {
   }
 
   deleteList(id: number) {
-    this.service.deleteList(id).subscribe();
+    this.service.deleteList(id).subscribe(data => { this.refresh() });
+
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 }
+
+

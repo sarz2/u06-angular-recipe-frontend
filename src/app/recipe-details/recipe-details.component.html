@@ -1,18 +1,26 @@
-<div *ngIf="recipe">
-    <h1> {{ recipe.label }} </h1>
-    <img src="{{ recipe.image }}" alt="">
-    <div *ngFor="let ingredient of recipe.ingredientLines">
-        <p>
-            - {{ ingredient }}
-        </p>
-    </div>
-    <div *ngIf="this.message !== ''">
-        {{ this.message }}
-    </div>
-    <div class="d-flex flex-row" *ngFor="let list of lists">
-        <div>
-            <h4>{{ list.title }}</h4>
+<div class="d-flex flex-column flex-wrap align-items-around">
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="recipe-card" *ngIf="recipe">
+            <h1> {{ recipe.label }} </h1>
+            <img src="{{ recipe.image }}" alt="">
+            <div class="d-flex flex-column align-items-baseline">
+                <h2>Ingredients</h2>
+                <div *ngFor="let ingredient of recipe.ingredientLines">
+                    <p>
+                        - {{ ingredient }}
+                    </p>
+                </div>
+            </div>
         </div>
-        <button class="btn btn-primary" (click)="saveToList(recipe, list.id)">Save recipe</button>
+        <h2 class="white">Save this recipe!</h2>
+        <div class="message" *ngIf="this.message !== ''">
+            {{ this.message }}
+        </div>
+        <div class="w-75 list-container" *ngFor="let list of lists">
+            <div class="d-flex flex-row justify-content-between lists">
+                <h4>{{ list.title }}</h4>
+                <button class="btn btn-primary" (click)="saveToList(recipe, list.id)">Save recipe</button>
+            </div>
+        </div>
     </div>
-</div>
